@@ -1,6 +1,7 @@
 package com.vmschmidt.travelapp.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.RecyclerViewAdapter;
 import com.vmschmidt.travelapp.dataprovider.CountryProvider;
 
-public class CountryListFragment extends Fragment {
+public class CountryListFragment extends Fragment implements RecyclerViewAdapter.OnCountryListener {
+
+    private RecyclerViewAdapter adapter;
 
     public CountryListFragment(){
     }
@@ -27,7 +30,13 @@ public class CountryListFragment extends Fragment {
         View view  = inflater.inflate(R.layout.country_list_fragment, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.country_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new RecyclerViewAdapter(CountryProvider.getInstance(view.getContext()).getCountries()));
+        adapter = new RecyclerViewAdapter(CountryProvider.getInstance(view.getContext()).getCountries(), this);
+        recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onCountryClick(int position) {
+        adapter.updateCheckedCountry(position);
     }
 }

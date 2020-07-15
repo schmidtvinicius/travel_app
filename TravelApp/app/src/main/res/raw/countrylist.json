@@ -4,7 +4,7 @@
     "code": "AD"
   },
   {
-    "name": "United Arab Emirates (the)",
+    "name": "United Arab Emirates",
     "code": "AE"
   },
   {
@@ -84,7 +84,7 @@
     "code": "BN"
   },
   {
-    "name": "Bolivia (Plurinational State of)",
+    "name": "Bolivia",
     "code": "BO"
   },
   {
@@ -92,7 +92,7 @@
     "code": "BR"
   },
   {
-    "name": "Bahamas (the)",
+    "name": "Bahamas",
     "code": "BS"
   },
   {
@@ -116,15 +116,15 @@
     "code": "CA"
   },
   {
-    "name": "Congo (the Democratic Republic of the)",
+    "name": "Congo",
     "code": "CD"
   },
   {
-    "name": "Central African Republic (the)",
+    "name": "Central African Republic",
     "code": "CF"
   },
   {
-    "name": "Congo (the)",
+    "name": "Congo",
     "code": "CG"
   },
   {
@@ -188,7 +188,7 @@
     "code": "DM"
   },
   {
-    "name": "Dominican Republic (the)",
+    "name": "Dominican Republic",
     "code": "DO"
   },
   {
@@ -232,7 +232,7 @@
     "code": "FJ"
   },
   {
-    "name": "Micronesia (Federated States of)",
+    "name": "Micronesia",
     "code": "FM"
   },
   {
@@ -244,7 +244,7 @@
     "code": "GA"
   },
   {
-    "name": "United Kingdom of Great Britain and Northern Ireland (the)",
+    "name": "United Kingdom",
     "code": "GB"
   },
   {
@@ -260,7 +260,7 @@
     "code": "GH"
   },
   {
-    "name": "Gambia (the)",
+    "name": "Gambia",
     "code": "GM"
   },
   {
@@ -324,7 +324,7 @@
     "code": "IQ"
   },
   {
-    "name": "Iran (Islamic Republic of)",
+    "name": "Iran",
     "code": "IR"
   },
   {
@@ -364,7 +364,7 @@
     "code": "KI"
   },
   {
-    "name": "Comoros (the)",
+    "name": "Comoros",
     "code": "KM"
   },
   {
@@ -372,11 +372,11 @@
     "code": "KN"
   },
   {
-    "name": "Korea (the Democratic People's Republic of)",
+    "name": "Korea",
     "code": "KP"
   },
   {
-    "name": "Korea (the Republic of)",
+    "name": "Korea",
     "code": "KR"
   },
   {
@@ -388,7 +388,7 @@
     "code": "KZ"
   },
   {
-    "name": "Lao People's Democratic Republic (the)",
+    "name": "Lao People's Democratic Republic",
     "code": "LA"
   },
   {
@@ -440,7 +440,7 @@
     "code": "MC"
   },
   {
-    "name": "Moldova (the Republic of)",
+    "name": "Moldova",
     "code": "MD"
   },
   {
@@ -452,7 +452,7 @@
     "code": "MG"
   },
   {
-    "name": "Marshall Islands (the)",
+    "name": "Marshall Islands",
     "code": "MH"
   },
   {
@@ -508,7 +508,7 @@
     "code": "NA"
   },
   {
-    "name": "Niger (the)",
+    "name": "Niger",
     "code": "NE"
   },
   {
@@ -520,7 +520,7 @@
     "code": "NI"
   },
   {
-    "name": "Netherlands (the)",
+    "name": "Netherlands",
     "code": "NL"
   },
   {
@@ -556,7 +556,7 @@
     "code": "PG"
   },
   {
-    "name": "Philippines (the)",
+    "name": "Philippines",
     "code": "PH"
   },
   {
@@ -592,7 +592,7 @@
     "code": "RS"
   },
   {
-    "name": "Russian Federation (the)",
+    "name": "Russian Federation",
     "code": "RU"
   },
   {
@@ -612,7 +612,7 @@
     "code": "SC"
   },
   {
-    "name": "Sudan (the)",
+    "name": "Sudan",
     "code": "SD"
   },
   {
@@ -712,11 +712,11 @@
     "code": "TV"
   },
   {
-    "name": "Taiwan (Province of China)",
+    "name": "Taiwan",
     "code": "TW"
   },
   {
-    "name": "Tanzania, United Republic of",
+    "name": "Tanzania",
     "code": "TZ"
   },
   {
@@ -728,7 +728,7 @@
     "code": "UG"
   },
   {
-    "name": "United States of America (the)",
+    "name": "United States of America",
     "code": "US"
   },
   {
@@ -740,7 +740,7 @@
     "code": "UZ"
   },
   {
-    "name": "Holy See (the)",
+    "name": "Holy See",
     "code": "VA"
   },
   {
@@ -748,7 +748,7 @@
     "code": "VC"
   },
   {
-    "name": "Venezuela (Bolivarian Republic of)",
+    "name": "Venezuela",
     "code": "VE"
   },
   {
