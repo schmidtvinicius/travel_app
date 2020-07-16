@@ -1,7 +1,6 @@
 package com.vmschmidt.travelapp.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vmschmidt.travelapp.R;
-import com.vmschmidt.travelapp.RecyclerViewAdapter;
+import com.vmschmidt.travelapp.adapter.CountryAdapter;
 import com.vmschmidt.travelapp.dataprovider.CountryProvider;
 
-public class CountryListFragment extends Fragment implements RecyclerViewAdapter.OnCountryListener {
+public class CountryListFragment extends Fragment implements CountryAdapter.OnCountryListener {
 
-    private RecyclerViewAdapter adapter;
+    private CountryAdapter adapter;
 
     public CountryListFragment(){
     }
@@ -30,7 +29,7 @@ public class CountryListFragment extends Fragment implements RecyclerViewAdapter
         View view  = inflater.inflate(R.layout.country_list_fragment, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.country_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RecyclerViewAdapter(CountryProvider.getInstance(view.getContext()).getCountries(), this);
+        adapter = new CountryAdapter(CountryProvider.getInstance(view.getContext()).getCountries(), this);
         recyclerView.setAdapter(adapter);
         return view;
     }
