@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Travel App</string>
+    <string name="order_by_newest">Newest</string>
+    <string name="order_by_oldest">Oldest</string>
+    <string name="order_by_alphabetical">Alphabetical</string>
+    <string name="start_date_from">From:</string>
+    <string name="end_date_to">Until:</string>
 </resources>
