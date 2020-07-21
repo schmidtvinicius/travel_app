@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Travel App</string>
+    <string name="order_by_newest">Mais recente</string>
+    <string name="order_by_oldest">Mais antigo</string>
+    <string name="order_by_alphabetical">Alfabeto</string>
+    <string name="start_date_from">De:</string>
+    <string name="end_date_to">Até:</string>
+</resources>

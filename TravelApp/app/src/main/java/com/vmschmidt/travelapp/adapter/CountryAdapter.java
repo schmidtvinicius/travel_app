@@ -1,7 +1,6 @@
-package com.vmschmidt.travelapp;
+package com.vmschmidt.travelapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.dataprovider.FlagProvider;
 import com.vmschmidt.travelapp.model.Country;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
 
     private List<Country> countries;
     public boolean[] checkedCountries;
@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(List<Country> countries, OnCountryListener onCountryListener){
+    public CountryAdapter(List<Country> countries, OnCountryListener onCountryListener){
         this.countries = countries;
         this.onCountryListener = onCountryListener;
         this.checkedCountries = new boolean[countries.size()];
@@ -60,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // Create new views (invoked by the layout manager)
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CountryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.country_list_item, parent, false);
