@@ -1,16 +1,20 @@
 package com.vmschmidt.travelapp.model;
 
+import com.vmschmidt.travelapp.support.MyCustomDate;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Trip {
 
     private ArrayList<Country> countries;
-    private String startDate;
-    private String endDate;
+    private MyCustomDate startDate;
+    private MyCustomDate endDate;
     private String title;
 
-    public Trip(String startDate, String endDate, String title){
+    public Trip(MyCustomDate startDate, MyCustomDate endDate, String title){
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
@@ -18,11 +22,11 @@ public class Trip {
     }
 
 
-    public String getStartDate() {
+    public MyCustomDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public MyCustomDate getEndDate() {
         return endDate;
     }
 
