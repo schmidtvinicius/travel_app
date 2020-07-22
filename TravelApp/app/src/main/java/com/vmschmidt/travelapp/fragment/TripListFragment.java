@@ -41,12 +41,14 @@ import java.util.Random;
 
 public class TripListFragment extends Fragment {
 
-    private String[] orderByOptions;
+    private ArrayList<TripProvider.SortingMethod> orderByOptions;
     private ArrayList<Integer> yearsTest;
     private TripAdapter tripAdapter;
+    private ArrayList<Trip> trips;
+    private RecyclerView tripList;
 
     public TripListFragment(){
-        orderByOptions = new String[] {"Newest", "Oldest", "Alphabetical"};
+        orderByOptions = new ArrayList<>(Arrays.asList(TripProvider.SortingMethod.values()));
         yearsTest = new ArrayList<>();
         yearsTest.add(2000);
         yearsTest.add(2001);
@@ -60,7 +62,8 @@ public class TripListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.trips_list_fragment, container, false);
 
-        RecyclerView tripList = view.findViewById(R.id.trip_list);
+
+        tripList = view.findViewById(R.id.trip_list);
         tripList.setLayoutManager(new LinearLayoutManager(getContext()));
         Spinner yearSelectionSpinner = view.findViewById(R.id.spinner_year_selection);
         Spinner orderBySpinner = view.findViewById(R.id.spinner_order_by);
@@ -77,13 +80,26 @@ public class TripListFragment extends Fragment {
             }
         });
 
-        tripAdapter = new TripAdapter(TripProvider.getInstance().getAllTrips());
+        trips = TripProvider.getInstance().getAllTrips();
+
+        tripAdapter = new TripAdapter(trips);
         tripList.setAdapter(tripAdapter);
 
-        ArrayList<String> orderByOptions = new ArrayList<>(Arrays.asList(this.orderByOptions));
-        ArrayAdapter<String> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
+        ArrayAdapter<TripProvider.SortingMethod> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
         orderByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderBySpinner.setAdapter(orderByAdapter);
+        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, orderByOptions.get(i)));
+                tripList.setAdapter(tripAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         ArrayAdapter<Integer> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
         yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
