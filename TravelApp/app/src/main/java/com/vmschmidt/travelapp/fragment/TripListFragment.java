@@ -22,23 +22,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.TripAdapter;
+import com.vmschmidt.travelapp.dataprovider.TripProvider;
 import com.vmschmidt.travelapp.model.Country;
 import com.vmschmidt.travelapp.model.Trip;
+import com.vmschmidt.travelapp.support.MyCustomDate;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Random;
 
-public class TripListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class TripListFragment extends Fragment {
 
-    private String[] orderByOptions;
+    private ArrayList<TripProvider.SortingMethod> orderByOptions;
+    private ArrayList<Integer> yearsTest;
+    private TripAdapter tripAdapter;
+    private ArrayList<Trip> trips;
+    private RecyclerView tripList;
 
     public TripListFragment(){
-        orderByOptions = new String[] {"Newest", "Oldest", "Alphabetical"};
+        orderByOptions = new ArrayList<>(Arrays.asList(TripProvider.SortingMethod.values()));
+        yearsTest = new ArrayList<>();
+        yearsTest.add(2000);
+        yearsTest.add(2001);
+        yearsTest.add(2002);
+        yearsTest.add(2003);
     }
 
     @Nullable
@@ -47,51 +62,65 @@ public class TripListFragment extends Fragment implements AdapterView.OnItemSele
 
         View view = inflater.inflate(R.layout.trips_list_fragment, container, false);
 
-        RecyclerView tripList = view.findViewById(R.id.trip_list);
+
+        tripList = view.findViewById(R.id.trip_list);
         tripList.setLayoutManager(new LinearLayoutManager(getContext()));
         Spinner yearSelectionSpinner = view.findViewById(R.id.spinner_year_selection);
         Spinner orderBySpinner = view.findViewById(R.id.spinner_order_by);
 
-        String startDate = "2000-12-12";
-        String endDate = "2000-12-15";
+        yearSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getContext(), "Bla", Toast.LENGTH_SHORT).show();
+            }
 
-        ArrayList<Trip> trips = new ArrayList<>();
-        Trip trip1 = new Trip(startDate, endDate, "Trip1");
-        Trip trip2 = new Trip(startDate, endDate, "Trip2");
-        Trip trip3 = new Trip(startDate, endDate, "Trip3");
-        Trip trip4 = new Trip(startDate, endDate, "Trip4");
-        trips.add(trip1);
-        trips.add(trip2);
-        trips.add(trip3);
-        trips.add(trip4);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-        TripAdapter tripAdapter = new TripAdapter(trips);
+            }
+        });
+
+        trips = TripProvider.getInstance().getAllTrips();
+
+        tripAdapter = new TripAdapter(trips);
         tripList.setAdapter(tripAdapter);
 
-        ArrayList<String> orderByOptions = new ArrayList<>(Arrays.asList(this.orderByOptions));
-        ArrayAdapter<String> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
+        ArrayAdapter<TripProvider.SortingMethod> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
         orderByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderBySpinner.setAdapter(orderByAdapter);
+        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, orderByOptions.get(i)));
+                tripList.setAdapter(tripAdapter);
+            }
 
-        ArrayList<String> yearsTest = new ArrayList<>();
-        yearsTest.add("2000");
-        yearsTest.add("2001");
-        yearsTest.add("2002");
-        yearsTest.add("2003");
-        ArrayAdapter<String> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayAdapter<Integer> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
         yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSelectionSpinner.setAdapter(yearsTestAdapter);
-        yearSelectionSpinner.setOnItemSelectedListener(this);
+        yearSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateSelectedYear(yearsTest.get(i));
+                tripAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         return view;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public void updateSelectedYear(int year){
+        ArrayList<Trip> matchingTrips = TripProvider.getInstance().getTripsFromYear(year);
+        tripAdapter.setTrips(matchingTrips);
     }
 }
