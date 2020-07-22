@@ -41,14 +41,14 @@ import java.util.Random;
 
 public class TripListFragment extends Fragment {
 
-    private ArrayList<TripProvider.SortingMethod> orderByOptions;
+    private ArrayList<String> orderByOptions;
     private ArrayList<Integer> yearsTest;
     private TripAdapter tripAdapter;
     private ArrayList<Trip> trips;
     private RecyclerView tripList;
 
     public TripListFragment(){
-        orderByOptions = new ArrayList<>(Arrays.asList(TripProvider.SortingMethod.values()));
+        orderByOptions = new ArrayList<>();
         yearsTest = new ArrayList<>();
         yearsTest.add(2000);
         yearsTest.add(2001);
@@ -61,7 +61,6 @@ public class TripListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.trips_list_fragment, container, false);
-
 
         tripList = view.findViewById(R.id.trip_list);
         tripList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -85,13 +84,17 @@ public class TripListFragment extends Fragment {
         tripAdapter = new TripAdapter(trips);
         tripList.setAdapter(tripAdapter);
 
-        ArrayAdapter<TripProvider.SortingMethod> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
+        for(TripProvider.SortingMethod sortingMethod : TripProvider.SortingMethod.values()){
+            orderByOptions.add(TripProvider.getSortingMethodString(inflater.getContext(), sortingMethod));
+        }
+
+        ArrayAdapter<String> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
         orderByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderBySpinner.setAdapter(orderByAdapter);
         orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, orderByOptions.get(i)));
+                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[i]));
                 tripList.setAdapter(tripAdapter);
             }
 

@@ -1,5 +1,8 @@
 package com.vmschmidt.travelapp.dataprovider;
 
+import android.content.Context;
+
+import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.model.Trip;
 import com.vmschmidt.travelapp.support.MyCustomDate;
 
@@ -13,24 +16,32 @@ public class TripProvider {
 
     private HashMap<String, Trip> trips;
     private static TripProvider tripProvider;
+    private static HashMap<Integer, String> stringCache;
 
     public enum SortingMethod {
-        NEWEST("Newest"),
-        OLDEST("Oldest"),
-        ALPHABETICAL("Alphabetical");
+        NEWEST(R.string.order_by_newest),
+        OLDEST(R.string.order_by_oldest),
+        ALPHABETICAL(R.string.order_by_alphabetical);
 
-        private final String sortingMethod;
+        private final int sortingMethod;
 
-        SortingMethod(String sortingMethod) {
+        SortingMethod(int sortingMethod) {
             this.sortingMethod = sortingMethod;
         }
 
-        String getSortingMethod(){
-            return sortingMethod;
+        public int getSortingMethod(){
+            return this.sortingMethod;
         }
     }
 
+    public static String getSortingMethodString(Context context, SortingMethod sortingMethod){
+        int resId = sortingMethod.getSortingMethod();
+
+        return context.getString(resId);
+    }
+
     private TripProvider(){
+        stringCache = new HashMap<>();
         trips = new HashMap<>();
         init();
     }
