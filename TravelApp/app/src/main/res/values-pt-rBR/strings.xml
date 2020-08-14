@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Travel App</string>
+    <string name="app_name">Diário de viagem</string>
     <string name="order_by_newest">Mais recente</string>
     <string name="order_by_oldest">Mais antigo</string>
     <string name="order_by_alphabetical">Alfabético</string>
     <string name="start_date_from">De:</string>
     <string name="end_date_to">Até:</string>
+    <string name="option_add_trip">Adicionar viagem</string>
+    <string name="option_confirm">Confirmar</string>
+    <string name="label_trip_list">Viagens</string>
+    <string name="label_country_selection">Seleção de países</string>
+    <string name="label_trip_form">Detalhes da viagem</string>
+    <string name="hint_trip_title">Título</string>
+    <string name="toast_select_country">A viagem deve conter pelo menos um país</string>
 </resources>
