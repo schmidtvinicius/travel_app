@@ -95,4 +95,13 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
         checkedCountries[position] = !checkedCountries[position];
     }
 
+    public boolean hasSelectedCountries(){
+        for(boolean b : checkedCountries){
+            if(b){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
