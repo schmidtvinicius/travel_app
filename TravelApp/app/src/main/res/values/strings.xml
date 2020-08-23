@@ -12,5 +12,7 @@
     <string name="label_trip_form">Trip details</string>
     <string name="hint_trip_title">Title</string>
     <string name="toast_select_country">A trip must contain at least one country</string>
+    <string name="country_list_title">Countries:</string>
+    <string name="toast_insert_trip_title">The trip must have a title!</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

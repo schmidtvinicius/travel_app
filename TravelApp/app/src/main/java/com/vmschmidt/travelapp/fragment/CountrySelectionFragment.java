@@ -22,6 +22,8 @@ import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.CountryAdapter;
 import com.vmschmidt.travelapp.dataprovider.CountryProvider;
 
+import java.util.ArrayList;
+
 public class CountrySelectionFragment extends Fragment implements CountryAdapter.OnCountryListener {
 
     public static final String COUNTRY_LIST_FRAGMENT = "Country_list_fragment";
@@ -62,7 +64,7 @@ public class CountrySelectionFragment extends Fragment implements CountryAdapter
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(adapter.hasSelectedCountries()){
                     NavHostFragment.findNavController(CountrySelectionFragment.this)
-                            .navigate(CountrySelectionFragmentDirections.actionCountryListFragmentToCreateTripFormFragment());
+                            .navigate(CountrySelectionFragmentDirections.actionCountryListFragmentToCreateTripFormFragment(CountryAdapter.getSelectedIndexes()));
                 }else{
                     Toast.makeText(getContext(), R.string.toast_select_country, Toast.LENGTH_SHORT).show();
                 }

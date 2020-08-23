@@ -56,7 +56,7 @@ public class TripListFragment extends Fragment {
 
         trips = TripProvider.getInstance().getAllTrips();
 
-        tripAdapter = new TripAdapter(trips);
+        tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[0]));
         tripList.setAdapter(tripAdapter);
 
         ArrayList<String> orderByOptions = new ArrayList<>();

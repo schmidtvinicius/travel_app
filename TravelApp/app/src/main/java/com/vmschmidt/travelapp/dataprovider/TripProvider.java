@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class TripProvider {
 
-    private HashMap<String, Trip> trips;
+    private HashMap<Integer, Trip> trips;
     private static TripProvider tripProvider;
     private static HashMap<Integer, String> stringCache;
 
@@ -47,22 +47,22 @@ public class TripProvider {
     }
 
     private void init(){
-        MyCustomDate startDate1 = new MyCustomDate(2000, 12, 12);
-        MyCustomDate startDate2 = new MyCustomDate(2001, 12, 12);
-        MyCustomDate startDate3 = new MyCustomDate(2002, 12, 12);
-        MyCustomDate startDate4 = new MyCustomDate(2003, 12, 12);
-        MyCustomDate endDate1 = new MyCustomDate(2000, 12, 15);
-        MyCustomDate endDate2 = new MyCustomDate(2001, 12, 15);
-        MyCustomDate endDate3 = new MyCustomDate(2002, 12, 15);
-        MyCustomDate endDate4 = new MyCustomDate(2003, 12, 15);
-        Trip trip1 = new Trip(startDate1, endDate1, "Trip1");
-        Trip trip2 = new Trip(startDate2, endDate2, "Trip2");
-        Trip trip3 = new Trip(startDate3, endDate3, "Trip3");
-        Trip trip4 = new Trip(startDate4, endDate4, "Trip4");
-        trips.put(trip1.getTitle(), trip1);
-        trips.put(trip2.getTitle(), trip2);
-        trips.put(trip3.getTitle(), trip3);
-        trips.put(trip4.getTitle(), trip4);
+
+
+        ArrayList<String> countriesDummy = new ArrayList<>();
+        countriesDummy.add("Bla1");
+        countriesDummy.add("Bla2");
+        countriesDummy.add("Bla3");
+        countriesDummy.add("Bla4");
+
+        Trip trip1 = new Trip("Trip1", countriesDummy);
+        Trip trip2 = new Trip("Trip2", countriesDummy);
+        Trip trip3 = new Trip("Trip3", countriesDummy);
+        Trip trip4 = new Trip("Trip4", countriesDummy);
+//        trips.put(trip1.getId(), trip1);
+//        trips.put(trip2.getId(), trip2);
+//        trips.put(trip3.getId(), trip3);
+//        trips.put(trip4.getId(), trip4);
     }
 
     public static TripProvider getInstance(){
@@ -98,7 +98,7 @@ public class TripProvider {
                 Collections.sort(trips, new Comparator<Trip>() {
                     @Override
                     public int compare(Trip trip1, Trip trip2) {
-                        return trip2.getStartDate().toString().compareTo(trip1.getStartDate().toString());
+                        return trip1.getStartDate().toString().compareTo(trip2.getStartDate().toString());
                     }
                 });
                 break;
@@ -107,7 +107,7 @@ public class TripProvider {
                 Collections.sort(trips, new Comparator<Trip>() {
                     @Override
                     public int compare(Trip trip1, Trip trip2) {
-                        return trip1.getStartDate().toString().compareTo(trip2.getStartDate().toString());
+                        return trip2.getStartDate().toString().compareTo(trip1.getStartDate().toString());
                     }
                 });
                 break;
@@ -116,7 +116,7 @@ public class TripProvider {
                 Collections.sort(trips, new Comparator<Trip>() {
                     @Override
                     public int compare(Trip trip1, Trip trip2) {
-                        return trip1.getTitle().compareTo(trip2.getTitle());
+                        return trip1.getTitle().toLowerCase().compareTo(trip2.getTitle().toLowerCase());
                     }
                 });
                 break;
@@ -124,5 +124,10 @@ public class TripProvider {
             default:break;
         }
         return trips;
+    }
+
+    public void addTrip(String title, ArrayList<String> countryList){
+        Trip trip = new Trip(title, countryList);
+        trips.put(trip.getId(), trip);
     }
 }

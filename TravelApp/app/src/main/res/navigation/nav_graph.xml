@@ -26,5 +26,14 @@
     <fragment
         android:id="@+id/createTripFormFragment"
         android:name="com.vmschmidt.travelapp.fragment.CreateTripFormFragment"
-        tools:layout="@layout/fragment_create_trip_form" />
+        tools:layout="@layout/fragment_create_trip_form" >
+        <argument
+            android:name="SelectedIndexes"
+            app:argType="integer[]" />
+        <action
+            android:id="@+id/action_createTripFormFragment_to_tripListFragment"
+            app:destination="@id/tripListFragment"
+            app:popUpTo="@id/tripListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

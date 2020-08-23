@@ -14,7 +14,7 @@ public class MyCustomDate {
     }
 
     public MyCustomDate(String date){
-        String[] splitDate = date.split("[/-]");
+        String[] splitDate = date.split("[/.-]");
 
         this.day = Integer.parseInt(splitDate[0]);
         this.month = Integer.parseInt(splitDate[1]);
