@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Cu");
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
