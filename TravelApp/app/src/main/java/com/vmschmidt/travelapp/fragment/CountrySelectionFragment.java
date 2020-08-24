@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.CountryAdapter;
 import com.vmschmidt.travelapp.dataprovider.CountryProvider;
+import com.vmschmidt.travelapp.model.Model;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class CountrySelectionFragment extends Fragment implements CountryAdapter
 
         setHasOptionsMenu(true);
 
-        adapter = new CountryAdapter(CountryProvider.getInstance(view.getContext()).getCountries(), this);
+        adapter = new CountryAdapter(Model.getInstance().getCountries(), this);
         recyclerView.setAdapter(adapter);
         return view;
     }

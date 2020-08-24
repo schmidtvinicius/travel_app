@@ -10,6 +10,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.vmschmidt.travelapp.model.Model;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TRIP_LIST_FRAGMENT = "Trip_list_fragment";
@@ -18,11 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private Toolbar toolbar;
     private AppBarConfiguration appBarConfiguration;
+    private Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        model = Model.getInstance();
+        model.initializeDatabase(this);
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
