@@ -56,7 +56,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
     public CountryAdapter(List<Country> countries, OnCountryListener onCountryListener){
         this.countries = countries;
         this.onCountryListener = onCountryListener;
-        this.checkedCountries = new boolean[countries.size()];
+        checkedCountries = new boolean[countries.size()];
     }
 
     // Create new views (invoked by the layout manager)

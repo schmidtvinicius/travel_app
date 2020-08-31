@@ -258,7 +258,7 @@ CREATE TABLE Picture (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, entr
 
 CREATE TABLE Trip (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, name VARCHAR (50) NOT NULL, icon BLOB);
 
-CREATE TABLE Trip_country (country_code CHAR (3) REFERENCES Country (code) NOT NULL, trip_id INTEGER REFERENCES Trip (id) NOT NULL, PRIMARY KEY (country_code, trip_id));
+CREATE TABLE Trip_country (country_code CHAR (2) REFERENCES Country (code) NOT NULL, trip_id INTEGER REFERENCES Trip (id) NOT NULL, PRIMARY KEY (country_code, trip_id));
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;

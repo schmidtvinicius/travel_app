@@ -14,5 +14,10 @@
     <string name="toast_select_country">A trip must contain at least one country</string>
     <string name="country_list_title">Countries:</string>
     <string name="toast_insert_trip_title">The trip must have a title!</string>
+    <string name="permission_needed_title">Permission needed</string>
+    <string name="permission_explanation">This permission is needed to add icons and pictures to your trips</string>
+    <string name="option_ok">Ok</string>
+    <string name="option_cancel">Cancel</string>
+    <string name="spinner_item_all">All</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

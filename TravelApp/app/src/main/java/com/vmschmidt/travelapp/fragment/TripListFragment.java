@@ -1,6 +1,5 @@
 package com.vmschmidt.travelapp.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,23 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.TripAdapter;
 import com.vmschmidt.travelapp.dataprovider.TripProvider;
+import com.vmschmidt.travelapp.model.Model;
 import com.vmschmidt.travelapp.model.Trip;
 
 import java.util.ArrayList;
 
 public class TripListFragment extends Fragment {
 
-    private ArrayList<Integer> yearsTest;
+    private ArrayList<String> yearsTest;
     private TripAdapter tripAdapter;
     private ArrayList<Trip> trips;
     private RecyclerView tripList;
 
     public TripListFragment(){
-        yearsTest = new ArrayList<>();
-        yearsTest.add(2000);
-        yearsTest.add(2001);
-        yearsTest.add(2002);
-        yearsTest.add(2003);
     }
 
     @Nullable
@@ -47,6 +42,10 @@ public class TripListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.trips_list_fragment, container, false);
 
+        yearsTest = new ArrayList<>();
+        yearsTest.add(getString(R.string.spinner_item_all));
+        yearsTest.addAll(Model.getInstance().getYears());
+
         tripList = view.findViewById(R.id.trip_list);
         tripList.setLayoutManager(new LinearLayoutManager(getContext()));
         Spinner yearSelectionSpinner = view.findViewById(R.id.spinner_year_selection);
@@ -54,7 +53,7 @@ public class TripListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        trips = TripProvider.getInstance().getAllTrips();
+        trips = Model.getInstance().getTrips();
 
         tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[0]));
         tripList.setAdapter(tripAdapter);
@@ -81,7 +80,7 @@ public class TripListFragment extends Fragment {
             }
         });
 
-        ArrayAdapter<Integer> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
+        ArrayAdapter<String> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
         yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSelectionSpinner.setAdapter(yearsTestAdapter);
         yearSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -99,8 +98,13 @@ public class TripListFragment extends Fragment {
         return view;
     }
 
-    public void updateSelectedYear(int year){
-        ArrayList<Trip> matchingTrips = TripProvider.getInstance().getTripsFromYear(year);
+    public void updateSelectedYear(String year){
+        ArrayList<Trip> matchingTrips;
+        if(year.equals(getString(R.string.spinner_item_all))){
+            matchingTrips = Model.getInstance().getTrips();
+        }else{
+            matchingTrips = Model.getInstance().getTripsFromYear(year);
+        }
         tripAdapter.setTrips(matchingTrips);
     }
 

@@ -1,25 +1,33 @@
 package com.vmschmidt.travelapp.model;
 
+import android.graphics.Bitmap;
+
 import com.vmschmidt.travelapp.support.MyCustomDate;
 
 import java.util.ArrayList;
 
 public class Trip {
 
-    private ArrayList<String> countries;
+    private ArrayList<Country> countries;
     private MyCustomDate startDate;
     private MyCustomDate endDate;
     private String title;
+    private Bitmap icon;
     private int id;
-    private static int count;
     private static int lastDate = 1;
 
-    public Trip(String title, ArrayList<String> countries){
+    public Trip(String title, int id, Bitmap icon){
+        this.title = title;
+        this.id = id;
+        this.icon = icon;
+    }
+
+    public Trip(String title, ArrayList<Country> countries, Bitmap icon, int id){
+        this.icon = icon;
         setUpDate();
         this.title = title;
-        id = count;
-        count++;
         this.countries = countries;
+        this.id = id;
     }
 
     private void setUpDate(){
@@ -27,6 +35,10 @@ public class Trip {
         lastDate++;
         this.endDate = new MyCustomDate(2000, 12, lastDate);
         lastDate++;
+    }
+
+    public Bitmap getIcon(){
+        return this.icon;
     }
 
 
