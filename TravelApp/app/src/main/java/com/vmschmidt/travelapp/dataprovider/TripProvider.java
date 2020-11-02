@@ -48,17 +48,16 @@ public class TripProvider {
 
     private void init(){
 
-
         ArrayList<String> countriesDummy = new ArrayList<>();
         countriesDummy.add("Bla1");
         countriesDummy.add("Bla2");
         countriesDummy.add("Bla3");
         countriesDummy.add("Bla4");
 
-        Trip trip1 = new Trip("Trip1", countriesDummy);
-        Trip trip2 = new Trip("Trip2", countriesDummy);
-        Trip trip3 = new Trip("Trip3", countriesDummy);
-        Trip trip4 = new Trip("Trip4", countriesDummy);
+//        Trip trip1 = new Trip("Trip1", countriesDummy);
+//        Trip trip2 = new Trip("Trip2", countriesDummy);
+//        Trip trip3 = new Trip("Trip3", countriesDummy);
+//        Trip trip4 = new Trip("Trip4", countriesDummy);
 //        trips.put(trip1.getId(), trip1);
 //        trips.put(trip2.getId(), trip2);
 //        trips.put(trip3.getId(), trip3);
@@ -98,7 +97,7 @@ public class TripProvider {
                 Collections.sort(trips, new Comparator<Trip>() {
                     @Override
                     public int compare(Trip trip1, Trip trip2) {
-                        return trip1.getStartDate().toString().compareTo(trip2.getStartDate().toString());
+                        return trip2.getStartDate().toString().compareTo(trip1.getStartDate().toString());
                     }
                 });
                 break;
@@ -107,7 +106,7 @@ public class TripProvider {
                 Collections.sort(trips, new Comparator<Trip>() {
                     @Override
                     public int compare(Trip trip1, Trip trip2) {
-                        return trip2.getStartDate().toString().compareTo(trip1.getStartDate().toString());
+                        return trip1.getStartDate().toString().compareTo(trip2.getStartDate().toString());
                     }
                 });
                 break;
@@ -126,8 +125,8 @@ public class TripProvider {
         return trips;
     }
 
-    public void addTrip(String title, ArrayList<String> countryList){
-        Trip trip = new Trip(title, countryList);
-        trips.put(trip.getId(), trip);
-    }
+//    public void addTrip(String title, ArrayList<String> countryList){
+//        Trip trip = new Trip(title, countryList);
+//        trips.put(trip.getId(), trip);
+//    }
 }
