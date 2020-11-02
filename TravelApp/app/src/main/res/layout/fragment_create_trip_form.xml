@@ -5,7 +5,7 @@
     android:id="@+id/trip_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.CreateTripFormFragment" >
+    tools:context=".fragment.CreateTripFormFragment">
 
     <EditText
         android:id="@+id/edit_text_trip_title"

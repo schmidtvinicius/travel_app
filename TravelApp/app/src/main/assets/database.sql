@@ -252,13 +252,15 @@ INSERT INTO Country (code, name) VALUES ('ZA', 'South Africa');
 INSERT INTO Country (code, name) VALUES ('ZM', 'Zambia');
 INSERT INTO Country (code, name) VALUES ('ZW', 'Zimbabwe');
 
-CREATE TABLE Entry (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, trip_id INTEGER REFERENCES Trip (id) NOT NULL, date DATE (10) NOT NULL, text VARCHAR);
-
-CREATE TABLE Picture (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, entry_id INTEGER REFERENCES Entry (id) NOT NULL, data BLOB NOT NULL);
+CREATE TABLE Entry (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, trip_id INTEGER NOT NULL REFERENCES Trip (id), date DATE (10) NOT NULL, text VARCHAR);
 
 CREATE TABLE Trip (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, name VARCHAR (50) NOT NULL, icon BLOB);
 
-CREATE TABLE Trip_country (country_code CHAR (2) REFERENCES Country (code) NOT NULL, trip_id INTEGER REFERENCES Trip (id) NOT NULL, PRIMARY KEY (country_code, trip_id));
+CREATE TABLE Trip_country (country_code CHAR (2) REFERENCES Country (code) NOT NULL, trip_id INTEGER NOT NULL REFERENCES Trip (id), PRIMARY KEY (country_code, trip_id));
+INSERT INTO Trip_country (country_code, trip_id) VALUES ('GG', 1);
+INSERT INTO Trip_country (country_code, trip_id) VALUES ('GG', 5);
+INSERT INTO Trip_country (country_code, trip_id) VALUES ('GG', 2);
+INSERT INTO Trip_country (country_code, trip_id) VALUES ('GA', 2);
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;

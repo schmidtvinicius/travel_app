@@ -2,14 +2,12 @@ package com.vmschmidt.travelapp.model;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.database.MyCustomOpenHelper;
 
 import java.text.DateFormat;
@@ -114,6 +112,7 @@ public class Model {
                     Bitmap tripIconBitmap = BitmapFactory.decodeByteArray(tripIconByteArray, 0, tripIconByteArray.length);
                     Trip trip = new Trip(tripName, tripId, tripIconBitmap);
                     trips.add(trip);
+                    cursor.moveToNext();
                 }
             }
             cursor.close();
@@ -165,6 +164,7 @@ public class Model {
             while(!cursor.isAfterLast()){
                 String year = cursor.getString(cursor.getColumnIndex("year"));
                 years.add(year);
+                cursor.moveToNext();
             }
         }
         cursor.close();
@@ -190,6 +190,7 @@ public class Model {
                 Bitmap tripIconBitmap = BitmapFactory.decodeByteArray(tripIconByteArray, 0, tripIconByteArray.length);
                 Trip trip = new Trip(tripName, tripId, tripIconBitmap);
                 matchingTrips.add(trip);
+                cursor.moveToNext();
             }
         }
         cursor.close();

@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.vmschmidt.travelapp.MainActivity;
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.SimpleCountryItemAdapter;
@@ -70,7 +72,11 @@ public class CreateTripFormFragment extends Fragment {
         selectedCountriesList = view.findViewById(R.id.selected_countries_list_view);
         tripTitleEditText = view.findViewById(R.id.edit_text_trip_title);
         imageViewTripIcon = view.findViewById(R.id.iv_trip_icon);
-        imageViewTripIcon.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.standard_icon));
+        Glide.with(this)
+                .asBitmap()
+                .load(R.drawable.standard_icon)
+                .override(150, 150)
+                .into(imageViewTripIcon);
         imageViewTripIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,16 +98,13 @@ public class CreateTripFormFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == GET_PICTURE_CONTENT_CODE && resultCode == RESULT_OK){
-            Uri imageData = data.getData();
+        Uri imageData = data.getData();
+            Glide.with(this)
+                    .asBitmap()
+                    .load(imageData)
+                    .override(150, 150)
+                    .into(imageViewTripIcon);
 
-            try{
-                InputStream inputStream = getActivity().getContentResolver().openInputStream(imageData);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                imageViewTripIcon.setImageBitmap(bitmap);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
 
