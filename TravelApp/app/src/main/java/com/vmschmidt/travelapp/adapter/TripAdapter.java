@@ -1,5 +1,8 @@
 package com.vmschmidt.travelapp.adapter;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vmschmidt.travelapp.R;
@@ -24,14 +26,14 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         public TextView tripTitle;
         public TextView startDate;
         public TextView endDate;
-        public ImageView tripPreview;
+        public ImageView tripIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tripTitle = itemView.findViewById(R.id.trip_title);
             startDate = itemView.findViewById(R.id.trip_start_date);
             endDate = itemView.findViewById(R.id.trip_end_date);
-            tripPreview = itemView.findViewById(R.id.trip_item_preview);
+            tripIcon = itemView.findViewById(R.id.trip_item_icon);
         }
     }
 
@@ -55,13 +57,23 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
         holder.tripTitle.setText(trip.getTitle());
         holder.startDate.setText(R.string.start_date_from);
-        holder.startDate.append(" " + trip.getStartDate());
+//        holder.startDate.append(" " + trip.getStartDate().toString());
         holder.endDate.setText(R.string.end_date_to);
-        holder.endDate.append(" " + trip.getEndDate());
+//        holder.endDate.append(" " + trip.getEndDate().toString());
+        Bitmap tripIcon = trip.getIcon();
+        if(tripIcon == null){
+            holder.tripIcon.setImageBitmap(BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.standard_icon));
+        }else{
+            holder.tripIcon.setImageBitmap(trip.getIcon());
+        }
     }
 
     @Override
     public int getItemCount() {
         return trips.size();
+    }
+
+    public void setTrips(List<Trip> trips){
+        this.trips = trips;
     }
 }

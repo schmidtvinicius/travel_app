@@ -1,32 +1,60 @@
 package com.vmschmidt.travelapp.model;
 
-import java.time.LocalDate;
+import android.graphics.Bitmap;
+
+import com.vmschmidt.travelapp.support.MyCustomDate;
+
 import java.util.ArrayList;
 
 public class Trip {
 
     private ArrayList<Country> countries;
-    private String startDate;
-    private String endDate;
+    private MyCustomDate startDate;
+    private MyCustomDate endDate;
     private String title;
+    private Bitmap icon;
+    private int id;
+    private static int lastDate = 1;
 
-    public Trip(String startDate, String endDate, String title){
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Trip(String title, int id, Bitmap icon){
         this.title = title;
-        countries = new ArrayList<>();
+        this.id = id;
+        this.icon = icon;
+    }
+
+    public Trip(String title, ArrayList<Country> countries, Bitmap icon, int id){
+        this.icon = icon;
+        setUpDate();
+        this.title = title;
+        this.countries = countries;
+        this.id = id;
+    }
+
+    private void setUpDate(){
+        this.startDate = new MyCustomDate(2000, 12, lastDate);
+        lastDate++;
+        this.endDate = new MyCustomDate(2000, 12, lastDate);
+        lastDate++;
+    }
+
+    public Bitmap getIcon(){
+        return this.icon;
     }
 
 
-    public String getStartDate() {
+    public MyCustomDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public MyCustomDate getEndDate() {
         return endDate;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public int getId() {
+        return id;
     }
 }

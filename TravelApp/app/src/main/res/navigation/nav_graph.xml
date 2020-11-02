@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tripListFragment">
+
+    <fragment
+        android:id="@+id/tripListFragment"
+        android:name="com.vmschmidt.travelapp.fragment.TripListFragment"
+        android:label="@string/label_trip_list"
+        tools:layout="@layout/trips_list_fragment">
+        <action
+            android:id="@+id/action_tripListFragment_to_countryListFragment"
+            app:destination="@id/countryListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryListFragment"
+        android:name="com.vmschmidt.travelapp.fragment.CountrySelectionFragment"
+        android:label="@string/label_country_selection"
+        tools:layout="@layout/country_selection_fragment" >
+        <action
+            android:id="@+id/action_countryListFragment_to_createTripFormFragment"
+            app:destination="@id/createTripFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTripFormFragment"
+        android:name="com.vmschmidt.travelapp.fragment.CreateTripFormFragment"
+        tools:layout="@layout/fragment_create_trip_form" >
+        <argument
+            android:name="SelectedIndexes"
+            app:argType="integer[]" />
+        <action
+            android:id="@+id/action_createTripFormFragment_to_tripListFragment"
+            app:destination="@id/tripListFragment"
+            app:popUpTo="@id/tripListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

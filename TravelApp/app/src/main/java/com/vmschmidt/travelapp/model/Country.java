@@ -9,6 +9,11 @@ public class Country {
     private String code;
     private int flagResource;
 
+    public Country(String code, String name){
+        this.code = code;
+        this.name = name;
+    }
+
     public Country(JSONObject jsonObject){
         try {
             this.name = jsonObject.getString("name");
