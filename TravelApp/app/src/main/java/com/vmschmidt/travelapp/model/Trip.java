@@ -20,6 +20,7 @@ public class Trip {
         this.title = title;
         this.id = id;
         this.icon = icon;
+        setUpDate();
     }
 
     public Trip(String title, ArrayList<Country> countries, Bitmap icon, int id){

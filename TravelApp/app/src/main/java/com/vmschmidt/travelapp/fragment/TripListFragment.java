@@ -55,7 +55,7 @@ public class TripListFragment extends Fragment {
 
         trips = Model.getInstance().getTrips();
 
-        tripAdapter = new TripAdapter(trips);
+        tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[0]));
         tripList.setAdapter(tripAdapter);
 
         ArrayList<String> orderByOptions = new ArrayList<>();
@@ -67,18 +67,18 @@ public class TripListFragment extends Fragment {
         ArrayAdapter<String> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
         orderByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderBySpinner.setAdapter(orderByAdapter);
-//        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[i]));
-//                tripList.setAdapter(tripAdapter);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[i]));
+                tripList.setAdapter(tripAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         ArrayAdapter<String> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
         yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
