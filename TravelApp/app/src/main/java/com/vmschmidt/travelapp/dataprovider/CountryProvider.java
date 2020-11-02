@@ -68,4 +68,13 @@ public class CountryProvider {
         });
         return countryArrayList;
     }
+
+    public ArrayList<String> getCountriesOnIndexes(int[] selectedIndexes){
+        ArrayList<String> matchingCountries = new ArrayList<>();
+        ArrayList<Country> countries = getCountries();
+        for(int index : selectedIndexes){
+            matchingCountries.add(countries.get(index).getName());
+        }
+        return matchingCountries;
+    }
 }

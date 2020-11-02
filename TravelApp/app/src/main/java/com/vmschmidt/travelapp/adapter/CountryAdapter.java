@@ -14,12 +14,13 @@ import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.dataprovider.FlagProvider;
 import com.vmschmidt.travelapp.model.Country;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
 
     private List<Country> countries;
-    public boolean[] checkedCountries;
+    private static boolean[] checkedCountries;
     private OnCountryListener onCountryListener;
 
     // Provide a reference to the views for each data item
@@ -55,7 +56,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
     public CountryAdapter(List<Country> countries, OnCountryListener onCountryListener){
         this.countries = countries;
         this.onCountryListener = onCountryListener;
-        this.checkedCountries = new boolean[countries.size()];
+        checkedCountries = new boolean[countries.size()];
     }
 
     // Create new views (invoked by the layout manager)
@@ -93,6 +94,34 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
 
     public void updateCheckedCountry(int position){
         checkedCountries[position] = !checkedCountries[position];
+    }
+
+    public boolean hasSelectedCountries(){
+        for(boolean b : checkedCountries){
+            if(b){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int[] getSelectedIndexes(){
+
+        ArrayList<Integer> selectedIndexes = new ArrayList<>();
+
+        for(int i = 0; i < checkedCountries.length; i++) {
+            if (checkedCountries[i]) {
+                selectedIndexes.add(i);
+            }
+        }
+
+        int[] selectedIndexesArray = new int[selectedIndexes.size()];
+
+        for(int i = 0; i < selectedIndexesArray.length; i++){
+            selectedIndexesArray[i] = selectedIndexes.get(i);
+        }
+
+        return selectedIndexesArray;
     }
 
 }
