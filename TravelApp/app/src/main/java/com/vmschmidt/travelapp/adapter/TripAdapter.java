@@ -1,5 +1,6 @@
 package com.vmschmidt.travelapp.adapter;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,25 +21,40 @@ import java.util.List;
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     private List<Trip> trips;
+    private OnTripListener onTripListener;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView tripTitle;
         public TextView startDate;
         public TextView endDate;
         public ImageView tripIcon;
+        public OnTripListener onTripListener;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tripTitle = itemView.findViewById(R.id.trip_title);
-            startDate = itemView.findViewById(R.id.trip_start_date);
-            endDate = itemView.findViewById(R.id.trip_end_date);
-            tripIcon = itemView.findViewById(R.id.trip_item_icon);
+        public ViewHolder(@NonNull View v, OnTripListener onTripListener) {
+            super(v);
+            tripTitle = v.findViewById(R.id.trip_title);
+            startDate = v.findViewById(R.id.trip_start_date);
+            endDate = v.findViewById(R.id.trip_end_date);
+            tripIcon = v.findViewById(R.id.trip_item_icon);
+            this.onTripListener = onTripListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onTripListener.onTripClick(getAdapterPosition());
+        }
+
+        public Context getContext(){
+            return itemView.getContext();
         }
     }
 
-    public TripAdapter(List<Trip> trips){
+    public TripAdapter(List<Trip> trips, OnTripListener onTripListener){
         this.trips = trips;
+        this.onTripListener = onTripListener;
     }
 
     @NonNull
@@ -47,7 +63,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.trip_cardview_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, onTripListener);
     }
 
     @Override
@@ -71,6 +87,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return trips.size();
+    }
+
+    public interface OnTripListener{
+        void onTripClick(int position);
     }
 
     public void setTrips(List<Trip> trips){

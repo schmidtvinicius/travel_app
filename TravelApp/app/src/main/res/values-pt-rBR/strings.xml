@@ -25,4 +25,5 @@
     <string name="toast_start_after_end">A data de início não pode ser depois da data final!</string>
     <string name="start_date">De:</string>
     <string name="end_date">Até:</string>
+    <string name="title_entries">Anotações</string>
 </resources>

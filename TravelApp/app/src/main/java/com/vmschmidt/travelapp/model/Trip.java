@@ -48,4 +48,20 @@ public class Trip {
     public int getId() {
         return id;
     }
+
+    public ArrayList<Country> getCountries() {
+        return countries;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "countries=" + countries +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", title='" + title + '\'' +
+                ", icon=" + icon +
+                ", id=" + id +
+                '}';
+    }
 }

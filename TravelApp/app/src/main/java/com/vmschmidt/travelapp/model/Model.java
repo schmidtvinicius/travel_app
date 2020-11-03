@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.vmschmidt.travelapp.MainActivity;
 import com.vmschmidt.travelapp.database.MyCustomOpenHelper;
 import com.vmschmidt.travelapp.support.MyCustomDate;
 
@@ -126,6 +127,45 @@ public class Model {
             }
             cursor.close();
         return trips;
+    }
+
+    public Trip getTripById(int tripId){
+
+        Cursor tripCursor = database.rawQuery("SELECT tc.trip_id, t.name AS trip_name, t.start_date, t.end_date, t.icon, c.name AS country_name, tc.country_code\n" +
+                "FROM Trip_country tc\n" +
+                "INNER JOIN Country c\n" +
+                "ON c.code = tc.country_code\n" +
+                "INNER JOIN Trip t\n" +
+                "ON t.id = tc.trip_id\n" +
+                "WHERE trip_id = ?", new String[]{String.valueOf(tripId)});
+
+        if(tripCursor.moveToFirst()){
+            ArrayList<Country> countries = new ArrayList<>();
+            String name = tripCursor.getString(tripCursor.getColumnIndex("trip_name"));
+            MyCustomDate startDate = new MyCustomDate(tripCursor.getString(tripCursor.getColumnIndex("start_date")));
+            MyCustomDate endDate = new MyCustomDate(tripCursor.getString(tripCursor.getColumnIndex("end_date")));
+            byte[] tripIconByteArray = tripCursor.getBlob(tripCursor.getColumnIndex("icon"));
+            Bitmap tripIconBitmap = BitmapFactory.decodeByteArray(tripIconByteArray, 0, tripIconByteArray.length);
+            while(!tripCursor.isAfterLast()){
+                String countryName = tripCursor.getString(tripCursor.getColumnIndex("country_name"));
+                String countryCode = tripCursor.getString(tripCursor.getColumnIndex("country_code"));
+                Country country = new Country(countryCode, countryName);
+                countries.add(country);
+                tripCursor.moveToNext();
+            }
+            Trip trip = new Trip(name, startDate, endDate, tripId, tripIconBitmap, countries);
+            tripCursor.close();
+            return trip;
+        }
+        return null;
+    }
+
+    public void updateTrip(int tripId, String tripName, byte[] tripIconByteArray){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("name", tripName);
+        contentValues.put("icon", tripIconByteArray);
+        database.update("Trip", contentValues, "id = ?", new String[]{String.valueOf(tripId)});
     }
 
 //    public ArrayList<Trip> getTrips(){

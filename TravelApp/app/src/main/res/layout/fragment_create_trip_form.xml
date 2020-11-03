@@ -8,7 +8,7 @@
     tools:context=".fragment.CreateTripFormFragment">
 
     <EditText
-        android:id="@+id/edit_text_trip_title"
+        android:id="@+id/editTextCreateTripName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/selected_countries_list_view"
+        android:id="@+id/selectedCountriesListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -29,10 +29,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_country_list_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateCountryListTitle" />
 
     <TextView
-        android:id="@+id/tv_country_list_title"
+        android:id="@+id/tvCreateCountryListTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,10 +40,10 @@
         android:text="@string/country_list_title"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_trip_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/ivCreateTripIcon" />
 
     <ImageView
-        android:id="@+id/iv_trip_icon"
+        android:id="@+id/ivCreateTripIcon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="16dp"
@@ -54,7 +54,7 @@
         app:srcCompat="@drawable/standard_icon" />
 
     <EditText
-        android:id="@+id/editTextStartDate"
+        android:id="@+id/editTextCreateStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,10 +63,10 @@
         android:hint="@string/hint_start_date_from"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_trip_title" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCreateTripName" />
 
     <EditText
-        android:id="@+id/editTextEndDate"
+        android:id="@+id/editTextCreateEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -75,6 +75,6 @@
         android:hint="@string/hint_end_date_to"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextStartDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCreateStartDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
