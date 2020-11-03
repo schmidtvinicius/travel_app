@@ -2,11 +2,11 @@ package com.vmschmidt.travelapp.support;
 
 public class MyCustomDate {
 
-    private int year;
-    private int month;
-    private int day;
+    private String year;
+    private String month;
+    private String day;
 
-    public MyCustomDate(int year, int month, int day){
+    public MyCustomDate(String year, String month, String day){
 
         this.year = year;
         this.month = month;
@@ -14,43 +14,43 @@ public class MyCustomDate {
     }
 
     public MyCustomDate(String date){
-        String[] splitDate = date.split("[/.-]");
+        String[] splitDate = date.split("[-/.]");
 
-        this.day = Integer.parseInt(splitDate[0]);
-        this.month = Integer.parseInt(splitDate[1]);
-        this.year = Integer.parseInt(splitDate[2]);
+        this.day = splitDate[0];
+        this.month = splitDate[1];
+        this.year = splitDate[2];
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public int getDay() {
+    public String getDay() {
         return day;
     }
 
     public boolean isBefore(MyCustomDate otherDate){
 
-        if(this.year > otherDate.year){
+        if(this.year.compareTo(otherDate.getYear()) > 0){
             return false;
         }
-        if(this.year < otherDate.year){
+        if(this.year.compareTo(otherDate.getYear()) < 0){
             return true;
         }
-        if(this.month > otherDate.month){
+        if(this.month.compareTo(otherDate.getMonth()) > 0){
             return false;
         }
-        if(this.month < otherDate.month){
+        if(this.month.compareTo(otherDate.getMonth()) < 0){
             return true;
         }
-        if(this.day > otherDate.day){
+        if(this.day.compareTo(otherDate.day) > 0){
             return false;
         }
-        return this.day < otherDate.day;
+        return this.day.compareTo(otherDate.day) < 0;
     }
 
     @Override

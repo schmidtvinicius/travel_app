@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.vmschmidt.travelapp.database.MyCustomOpenHelper;
+import com.vmschmidt.travelapp.support.MyCustomDate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -79,10 +80,12 @@ public class Model {
         return selectedCountries;
     }
 
-    public void addTrip(String name, ArrayList<Country> selectedCountries, byte[] tripIconByteArray){
+    public void addTrip(String name, MyCustomDate startDate, MyCustomDate endDate, ArrayList<Country> selectedCountries, byte[] tripIconByteArray){
 
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put("start_date", startDate.toString());
+        contentValues.put("end_date", endDate.toString());
         contentValues.put("name", name);
         contentValues.put("icon", tripIconByteArray);
         database.insert("Trip", null, contentValues);
@@ -106,11 +109,17 @@ public class Model {
         Cursor cursor = database.rawQuery("SELECT * FROM Trip", null);
             if(cursor.moveToFirst()){
                 while(!cursor.isAfterLast()){
+                    String startDateString = cursor.getString(cursor.getColumnIndex("start_date"));
+                    String endDateString = cursor.getString(cursor.getColumnIndex("end_date"));
+                    Log.d("START", startDateString);
+                    Log.d("END", endDateString);
                     int tripId = cursor.getInt(cursor.getColumnIndex("id"));
                     String tripName = cursor.getString(cursor.getColumnIndex("name"));
                     byte[] tripIconByteArray = cursor.getBlob(cursor.getColumnIndex("icon"));
+                    MyCustomDate startDate = new MyCustomDate(cursor.getString(cursor.getColumnIndex("start_date")));
+                    MyCustomDate endDate = new MyCustomDate(cursor.getString(cursor.getColumnIndex("end_date")));
                     Bitmap tripIconBitmap = BitmapFactory.decodeByteArray(tripIconByteArray, 0, tripIconByteArray.length);
-                    Trip trip = new Trip(tripName, tripId, tripIconBitmap);
+                    Trip trip = new Trip(tripName, startDate, endDate, tripId, tripIconBitmap);
                     trips.add(trip);
                     cursor.moveToNext();
                 }
@@ -187,8 +196,10 @@ public class Model {
                 String tripName = cursor.getString(cursor.getColumnIndex("trip_name"));
                 int tripId = cursor.getInt(cursor.getColumnIndex("trip_id"));
                 byte[] tripIconByteArray = cursor.getBlob(cursor.getColumnIndex("trip_icon"));
+                MyCustomDate startDate = new MyCustomDate(cursor.getString(cursor.getColumnIndex("start_date")));
+                MyCustomDate endDate = new MyCustomDate(cursor.getString(cursor.getColumnIndex("end_date")));
                 Bitmap tripIconBitmap = BitmapFactory.decodeByteArray(tripIconByteArray, 0, tripIconByteArray.length);
-                Trip trip = new Trip(tripName, tripId, tripIconBitmap);
+                Trip trip = new Trip(tripName, startDate, endDate, tripId, tripIconBitmap);
                 matchingTrips.add(trip);
                 cursor.moveToNext();
             }
