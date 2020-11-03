@@ -1,10 +1,12 @@
 package com.vmschmidt.travelapp.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,7 +28,7 @@ import com.vmschmidt.travelapp.model.Trip;
 
 import java.util.ArrayList;
 
-public class TripListFragment extends Fragment {
+public class TripListFragment extends Fragment implements TripAdapter.OnTripListener {
 
     private ArrayList<String> yearsTest;
     private TripAdapter tripAdapter;
@@ -55,7 +57,7 @@ public class TripListFragment extends Fragment {
 
         trips = Model.getInstance().getTrips();
 
-        tripAdapter = new TripAdapter(trips);
+        tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[0]), this);
         tripList.setAdapter(tripAdapter);
 
         ArrayList<String> orderByOptions = new ArrayList<>();
@@ -67,18 +69,18 @@ public class TripListFragment extends Fragment {
         ArrayAdapter<String> orderByAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, orderByOptions);
         orderByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderBySpinner.setAdapter(orderByAdapter);
-//        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[i]));
-//                tripList.setAdapter(tripAdapter);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        orderBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                tripAdapter = new TripAdapter(TripProvider.getInstance().sortTrips(trips, TripProvider.SortingMethod.values()[i]), TripListFragment.this);
+                tripList.setAdapter(tripAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         ArrayAdapter<String> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
         yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -121,5 +123,11 @@ public class TripListFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onTripClick(int position) {
+        Trip trip = trips.get(position);
+        NavHostFragment.findNavController(TripListFragment.this).navigate(TripListFragmentDirections.actionTripListFragmentToTripDetailFragment(trip.getId()));
     }
 }

@@ -1,6 +1,5 @@
 package com.vmschmidt.travelapp.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,17 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.CountryAdapter;
-import com.vmschmidt.travelapp.dataprovider.CountryProvider;
 import com.vmschmidt.travelapp.model.Model;
-
-import java.util.ArrayList;
 
 public class CountrySelectionFragment extends Fragment implements CountryAdapter.OnCountryListener {
 

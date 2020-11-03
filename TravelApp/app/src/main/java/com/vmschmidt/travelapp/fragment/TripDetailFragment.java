@@ -8,15 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,46 +18,59 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.SimpleCountryItemAdapter;
-import com.vmschmidt.travelapp.model.Country;
 import com.vmschmidt.travelapp.model.Model;
-import com.vmschmidt.travelapp.support.MyCustomDate;
+import com.vmschmidt.travelapp.model.Trip;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
-public class CreateTripFormFragment extends Fragment {
+public class TripDetailFragment extends Fragment {
 
     private static final int STORAGE_PERMISSION_CODE = 1;
     private static final int GET_PICTURE_CONTENT_CODE = 2;
 
-    private ListView selectedCountriesList;
-    private EditText tripTitleEditText;
-    private EditText tripStartDateEditText;
-    private EditText tripEndDateEditText;
+    private ListView countriesListView;
+    private EditText tripNameEditText;
+    private TextView tripStartDateTextView;
+    private TextView tripEndDateTextView;
     private ImageView imageViewTripIcon;
-    private ArrayList<Country> selectedCountries;
+    private Trip trip;
 
-    public CreateTripFormFragment() {
+    public TripDetailFragment(){
     }
 
+    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_trip_form, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        selectedCountriesList = view.findViewById(R.id.selectedCountriesListView);
-        tripTitleEditText = view.findViewById(R.id.editTextCreateTripName);
-        tripStartDateEditText = view.findViewById(R.id.editTextCreateStartDate);
-        tripEndDateEditText = view.findViewById(R.id.editTextCreateEndDate);
-        imageViewTripIcon = view.findViewById(R.id.ivCreateTripIcon);
+        View view = inflater.inflate(R.layout.fragment_trip_detail, container, false);
 
+        int tripId = TripDetailFragmentArgs.fromBundle(getArguments()).getTripId();
+
+        trip = Model.getInstance().getTripById(tripId);
+
+        Log.d("TRIP", trip.toString());
+
+        countriesListView = view.findViewById(R.id.countriesListView);
+        tripNameEditText = view.findViewById(R.id.editTextTripName);
+        tripStartDateTextView = view.findViewById(R.id.tvTripStartDate);
+        tripEndDateTextView = view.findViewById(R.id.tvTripEndDate);
+        imageViewTripIcon = view.findViewById(R.id.ivTripIcon);
         imageViewTripIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,30 +90,18 @@ public class CreateTripFormFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == GET_PICTURE_CONTENT_CODE && resultCode == RESULT_OK){
-        Uri imageData = data.getData();
-            Glide.with(this)
-                    .asBitmap()
-                    .load(imageData)
-                    .override(150, 150)
-                    .into(imageViewTripIcon);
-
-        }
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        countriesListView.setAdapter(new SimpleCountryItemAdapter(getContext(), trip.getCountries()));
+        tripNameEditText.setText(trip.getTitle());
+        tripStartDateTextView.setText(R.string.start_date);
+        tripStartDateTextView.append(" " + trip.getStartDate().toString());
+        tripEndDateTextView.setText(R.string.end_date);
+        tripEndDateTextView.append(" " + trip.getEndDate().toString());
         Glide.with(this)
                 .asBitmap()
-                .load(R.drawable.standard_icon)
+                .load(trip.getIcon())
                 .override(150, 150)
                 .into(imageViewTripIcon);
-
-        int[] selectedIndexes = CreateTripFormFragmentArgs.fromBundle(getArguments()).getSelectedIndexes();
-        selectedCountries = Model.getInstance().getCountriesFromIndexes(selectedIndexes);
-
-        selectedCountriesList.setAdapter(new SimpleCountryItemAdapter(getContext(), selectedCountries));
     }
 
     @Override
@@ -120,25 +113,31 @@ public class CreateTripFormFragment extends Fragment {
         confirmOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-
-                if(tripTitleEditText.getText().length() == 0 || tripStartDateEditText.getText().length() == 0 || tripEndDateEditText.getText().length() == 0){
+                if(tripNameEditText.getText().length() == 0 || tripStartDateTextView.getText().length() == 0 || tripEndDateTextView.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_insert_trip_title, Toast.LENGTH_SHORT).show();
-                }else if(!tripStartDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
-                    Toast.makeText(getContext(), R.string.toast_invalid_start_date, Toast.LENGTH_LONG).show();
-                }else if(!tripEndDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
-                    Toast.makeText(getContext(), R.string.toast_invalid_end_date, Toast.LENGTH_LONG).show();
-                }else if(tripStartDateEditText.getText().toString().compareTo(tripEndDateEditText.getText().toString()) > 0){
-                    Toast.makeText(getContext(), R.string.toast_start_after_end, Toast.LENGTH_LONG).show();
                 }else{
-                    MyCustomDate startDate = new MyCustomDate(tripStartDateEditText.getText().toString());
-                    MyCustomDate endDate = new MyCustomDate(tripEndDateEditText.getText().toString());
-                    Model.getInstance().addTrip(tripTitleEditText.getText().toString(), startDate, endDate, selectedCountries, imageToByteArray(imageViewTripIcon));
-                    NavHostFragment.findNavController(CreateTripFormFragment.this)
-                            .navigate(CreateTripFormFragmentDirections.actionCreateTripFormFragmentToTripListFragment());
+                    String tripName = tripNameEditText.getText().toString();
+                    byte[] imageByteArray = imageToByteArray(imageViewTripIcon);
+                    Model.getInstance().updateTrip(trip.getId(), tripName, imageByteArray);
+                    NavHostFragment.findNavController(TripDetailFragment.this)
+                            .navigate(TripDetailFragmentDirections.actionTripDetailFragmentToTripListFragment());
                 }
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == GET_PICTURE_CONTENT_CODE && resultCode == RESULT_OK){
+            Uri imageData = data.getData();
+            Glide.with(this)
+                    .asBitmap()
+                    .load(imageData)
+                    .override(150, 150)
+                    .into(imageViewTripIcon);
+
+        }
     }
 
     private byte[] imageToByteArray(ImageView imageView){

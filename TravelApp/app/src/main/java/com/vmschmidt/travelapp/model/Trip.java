@@ -14,27 +14,18 @@ public class Trip {
     private String title;
     private Bitmap icon;
     private int id;
-    private static int lastDate = 1;
 
-    public Trip(String title, int id, Bitmap icon){
+    public Trip(String title, MyCustomDate startDate, MyCustomDate endDate, int id, Bitmap icon){
         this.title = title;
         this.id = id;
         this.icon = icon;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public Trip(String title, ArrayList<Country> countries, Bitmap icon, int id){
-        this.icon = icon;
-        setUpDate();
-        this.title = title;
+    public Trip(String title, MyCustomDate startDate, MyCustomDate endDate, int id, Bitmap icon, ArrayList<Country> countries ){
+        this(title, startDate, endDate, id, icon);
         this.countries = countries;
-        this.id = id;
-    }
-
-    private void setUpDate(){
-        this.startDate = new MyCustomDate(2000, 12, lastDate);
-        lastDate++;
-        this.endDate = new MyCustomDate(2000, 12, lastDate);
-        lastDate++;
     }
 
     public Bitmap getIcon(){
@@ -56,5 +47,21 @@ public class Trip {
 
     public int getId() {
         return id;
+    }
+
+    public ArrayList<Country> getCountries() {
+        return countries;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "countries=" + countries +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", title='" + title + '\'' +
+                ", icon=" + icon +
+                ", id=" + id +
+                '}';
     }
 }

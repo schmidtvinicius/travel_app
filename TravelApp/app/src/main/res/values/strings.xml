@@ -3,8 +3,8 @@
     <string name="order_by_newest">Newest</string>
     <string name="order_by_oldest">Oldest</string>
     <string name="order_by_alphabetical">Alphabetical</string>
-    <string name="start_date_from">From:</string>
-    <string name="end_date_to">Until:</string>
+    <string name="hint_start_date_from">From (dd-mm-yyyy):</string>
+    <string name="hint_end_date_to">Until (dd-mm-yyyy):</string>
     <string name="option_add_trip">Add trip</string>
     <string name="option_confirm">Confirm</string>
     <string name="label_trip_list">Trips</string>
@@ -13,11 +13,18 @@
     <string name="hint_trip_title">Title</string>
     <string name="toast_select_country">A trip must contain at least one country</string>
     <string name="country_list_title">Countries:</string>
-    <string name="toast_insert_trip_title">The trip must have a title!</string>
+    <string name="toast_insert_trip_title">The trip must have a title, a start date and an end date!</string>
     <string name="permission_needed_title">Permission needed</string>
     <string name="permission_explanation">This permission is needed to add icons and pictures to your trips</string>
     <string name="option_ok">Ok</string>
     <string name="option_cancel">Cancel</string>
     <string name="spinner_item_all">All</string>
+    <string name="toast_invalid_start_date">Start date is invalid!</string>
+    <string name="toast_invalid_end_date">End date is invalid!</string>
+    <string name="toast_start_after_end">The start date cannot be after the end date!</string>
+    <string name="start_date">From:</string>
+    <string name="end_date">Until:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_entries">Entries</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

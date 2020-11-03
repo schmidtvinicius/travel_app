@@ -78,18 +78,6 @@ public class TripProvider {
         return new ArrayList<>(tripsCollection);
     }
 
-    public ArrayList<Trip> getTripsFromYear(int year){
-
-        ArrayList<Trip> matchingTrips = new ArrayList<>();
-        for(Trip trip : trips.values()){
-            if(trip.getStartDate().getYear() == year){
-                matchingTrips.add(trip);
-            }
-        }
-
-        return matchingTrips;
-    }
-
     public ArrayList<Trip> sortTrips(ArrayList<Trip> trips, SortingMethod sortingMethod){
         switch (sortingMethod){
 
