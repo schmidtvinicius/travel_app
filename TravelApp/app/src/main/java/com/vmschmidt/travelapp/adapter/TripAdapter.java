@@ -56,9 +56,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         Trip trip = trips.get(position);
 
         holder.tripTitle.setText(trip.getTitle());
-        holder.startDate.setText(R.string.start_date_from);
+        holder.startDate.setText(R.string.start_date);
         holder.startDate.append(" " + trip.getStartDate().toString());
-        holder.endDate.setText(R.string.end_date_to);
+        holder.endDate.setText(R.string.end_date);
         holder.endDate.append(" " + trip.getEndDate().toString());
         Bitmap tripIcon = trip.getIcon();
         if(tripIcon == null){

@@ -43,11 +43,14 @@ import com.vmschmidt.travelapp.dataprovider.CountryProvider;
 import com.vmschmidt.travelapp.dataprovider.TripProvider;
 import com.vmschmidt.travelapp.model.Country;
 import com.vmschmidt.travelapp.model.Model;
+import com.vmschmidt.travelapp.support.MyCustomDate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import javax.xml.datatype.Duration;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -58,6 +61,8 @@ public class CreateTripFormFragment extends Fragment {
 
     private ListView selectedCountriesList;
     private EditText tripTitleEditText;
+    private EditText tripStartDateEditText;
+    private EditText tripEndDateEditText;
     private ImageView imageViewTripIcon;
     private ArrayList<Country> selectedCountries;
 
@@ -71,6 +76,8 @@ public class CreateTripFormFragment extends Fragment {
 
         selectedCountriesList = view.findViewById(R.id.selected_countries_list_view);
         tripTitleEditText = view.findViewById(R.id.edit_text_trip_title);
+        tripStartDateEditText = view.findViewById(R.id.editTextStartDate);
+        tripEndDateEditText = view.findViewById(R.id.editTextEndDate);
         imageViewTripIcon = view.findViewById(R.id.iv_trip_icon);
         Glide.with(this)
                 .asBitmap()
@@ -126,14 +133,21 @@ public class CreateTripFormFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
-                if(tripTitleEditText.getText().length() == 0){
+                if(tripTitleEditText.getText().length() == 0 || tripStartDateEditText.getText().length() == 0 || tripEndDateEditText.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_insert_trip_title, Toast.LENGTH_SHORT).show();
+                }else if(!tripStartDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
+                    Toast.makeText(getContext(), R.string.toast_invalid_start_date, Toast.LENGTH_LONG).show();
+                }else if(!tripEndDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
+                    Toast.makeText(getContext(), R.string.toast_invalid_end_date, Toast.LENGTH_LONG).show();
+                }else if(tripStartDateEditText.getText().toString().compareTo(tripEndDateEditText.getText().toString()) > 0){
+                    Toast.makeText(getContext(), R.string.toast_start_after_end, Toast.LENGTH_LONG).show();
                 }else{
-                    Model.getInstance().addTrip(tripTitleEditText.getText().toString(), selectedCountries, imageToByteArray(imageViewTripIcon));
+                    MyCustomDate startDate = new MyCustomDate(tripStartDateEditText.getText().toString());
+                    MyCustomDate endDate = new MyCustomDate(tripEndDateEditText.getText().toString());
+                    Model.getInstance().addTrip(tripTitleEditText.getText().toString(), startDate, endDate, selectedCountries, imageToByteArray(imageViewTripIcon));
                     NavHostFragment.findNavController(CreateTripFormFragment.this)
                             .navigate(CreateTripFormFragmentDirections.actionCreateTripFormFragmentToTripListFragment());
                 }
-
                 return true;
             }
         });

@@ -4,8 +4,8 @@
     <string name="order_by_newest">Mais recente</string>
     <string name="order_by_oldest">Mais antigo</string>
     <string name="order_by_alphabetical">Alfabético</string>
-    <string name="start_date_from">De:</string>
-    <string name="end_date_to">Até:</string>
+    <string name="hint_start_date_from">De (dd-mm-yyyy):</string>
+    <string name="hint_end_date_to">Até (dd-mm-yyyy):</string>
     <string name="option_add_trip">Adicionar viagem</string>
     <string name="option_confirm">Confirmar</string>
     <string name="label_trip_list">Viagens</string>
@@ -14,10 +14,15 @@
     <string name="hint_trip_title">Título</string>
     <string name="toast_select_country">A viagem deve conter pelo menos um país</string>
     <string name="country_list_title">Países:</string>
-    <string name="toast_insert_trip_title">A viagem precisa ter um título!</string>
+    <string name="toast_insert_trip_title">A viagem precisa ter um título, um início e um fim!</string>
     <string name="permission_needed_title">Permissão necessária</string>
     <string name="permission_explanation">Essa permissão é necessária para adicionar ícones e fotos a viagem</string>
     <string name="option_ok">Ok</string>
     <string name="option_cancel">Cancelar</string>
     <string name="spinner_item_all">Todos</string>
+    <string name="toast_invalid_start_date">A data de início é inválida!</string>
+    <string name="toast_invalid_end_date">A data final é inválida!</string>
+    <string name="toast_start_after_end">A data de início não pode ser depois da data final!</string>
+    <string name="start_date">De:</string>
+    <string name="end_date">Até:</string>
 </resources>
