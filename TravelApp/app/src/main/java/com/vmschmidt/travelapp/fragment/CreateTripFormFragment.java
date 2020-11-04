@@ -105,8 +105,8 @@ public class CreateTripFormFragment extends Fragment {
                 .override(150, 150)
                 .into(imageViewTripIcon);
 
-        int[] selectedIndexes = CreateTripFormFragmentArgs.fromBundle(getArguments()).getSelectedIndexes();
-        selectedCountries = Model.getInstance().getCountriesFromIndexes(selectedIndexes);
+        String[] selectedCountryCodes = CreateTripFormFragmentArgs.fromBundle(getArguments()).getSelectedCountryCodes();
+        selectedCountries = Model.getInstance().getCountriesByCode(selectedCountryCodes);
 
         selectedCountriesList.setAdapter(new SimpleCountryItemAdapter(getContext(), selectedCountries));
     }
