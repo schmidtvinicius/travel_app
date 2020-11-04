@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/countryListFragment"
-        android:name="com.vmschmidt.travelapp.fragment.CountrySelectionFragment"
+        android:name="com.vmschmidt.travelapp.fragment.CountryListFragment"
         android:label="@string/label_country_selection"
         tools:layout="@layout/country_selection_fragment" >
         <action
@@ -51,5 +51,54 @@
             app:destination="@id/tripListFragment"
             app:popUpTo="@id/tripListFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_tripDetailFragment_to_entryListFragment"
+            app:destination="@id/entryListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryListFragment"
+        android:name="com.vmschmidt.travelapp.fragment.EntryListFragment"
+        android:label="fragment_entry_list"
+        tools:layout="@layout/fragment_entry_list" >
+        <argument
+            android:name="tripId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_entryListFragment_to_createEntryFragment"
+            app:destination="@id/createEntryFragment" />
+        <action
+            android:id="@+id/action_entryListFragment_to_entryDetailFragment"
+            app:destination="@id/entryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEntryFragment"
+        android:name="com.vmschmidt.travelapp.fragment.CreateEntryFragment"
+        android:label="fragment_create_entry"
+        tools:layout="@layout/fragment_create_entry" >
+        <argument
+            android:name="tripId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_createEntryFragment_to_entryListFragment"
+            app:destination="@id/entryListFragment"
+            app:popUpTo="@id/entryListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryDetailFragment"
+        android:name="com.vmschmidt.travelapp.fragment.EntryDetailFragment"
+        android:label="fragment_entry_detail"
+        tools:layout="@layout/fragment_entry_detail" >
+        <action
+            android:id="@+id/action_entryDetailFragment_to_entryListFragment"
+            app:destination="@id/entryListFragment"
+            app:popUpTo="@id/entryListFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="entryId"
+            app:argType="integer" />
+        <argument
+            android:name="tripId"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -20,13 +20,13 @@ import com.vmschmidt.travelapp.R;
 import com.vmschmidt.travelapp.adapter.CountryAdapter;
 import com.vmschmidt.travelapp.model.Model;
 
-public class CountrySelectionFragment extends Fragment implements CountryAdapter.OnCountryListener {
+public class CountryListFragment extends Fragment implements CountryAdapter.OnCountryListener {
 
     public static final String COUNTRY_LIST_FRAGMENT = "Country_list_fragment";
 
     private CountryAdapter adapter;
 
-    public CountrySelectionFragment(){
+    public CountryListFragment(){
     }
 
     @Nullable
@@ -59,8 +59,8 @@ public class CountrySelectionFragment extends Fragment implements CountryAdapter
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(adapter.hasSelectedCountries()){
-                    NavHostFragment.findNavController(CountrySelectionFragment.this)
-                            .navigate(CountrySelectionFragmentDirections.actionCountryListFragmentToCreateTripFormFragment(CountryAdapter.getSelectedIndexes()));
+                    NavHostFragment.findNavController(CountryListFragment.this)
+                            .navigate(CountryListFragmentDirections.actionCountryListFragmentToCreateTripFormFragment(adapter.getSelectedIndexes()));
                 }else{
                     Toast.makeText(getContext(), R.string.toast_select_country, Toast.LENGTH_SHORT).show();
                 }

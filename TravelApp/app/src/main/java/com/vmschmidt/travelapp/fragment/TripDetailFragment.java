@@ -48,8 +48,10 @@ public class TripDetailFragment extends Fragment {
     private EditText tripNameEditText;
     private TextView tripStartDateTextView;
     private TextView tripEndDateTextView;
+    private TextView entryListTitle;
     private ImageView imageViewTripIcon;
     private Trip trip;
+    private int tripId;
 
     public TripDetailFragment(){
     }
@@ -60,7 +62,7 @@ public class TripDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_trip_detail, container, false);
 
-        int tripId = TripDetailFragmentArgs.fromBundle(getArguments()).getTripId();
+        tripId = TripDetailFragmentArgs.fromBundle(getArguments()).getTripId();
 
         trip = Model.getInstance().getTripById(tripId);
 
@@ -70,6 +72,15 @@ public class TripDetailFragment extends Fragment {
         tripNameEditText = view.findViewById(R.id.editTextTripName);
         tripStartDateTextView = view.findViewById(R.id.tvTripStartDate);
         tripEndDateTextView = view.findViewById(R.id.tvTripEndDate);
+        entryListTitle = view.findViewById(R.id.tvEntriesTitle);
+        entryListTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TripDetailFragment.this)
+                        .navigate(TripDetailFragmentDirections.actionTripDetailFragmentToEntryListFragment(tripId));
+            }
+        });
+
         imageViewTripIcon = view.findViewById(R.id.ivTripIcon);
         imageViewTripIcon.setOnClickListener(new View.OnClickListener() {
             @Override

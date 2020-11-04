@@ -6,7 +6,7 @@
     <string name="order_by_alphabetical">Alfabético</string>
     <string name="hint_start_date_from">De (dd-mm-yyyy):</string>
     <string name="hint_end_date_to">Até (dd-mm-yyyy):</string>
-    <string name="option_add_trip">Adicionar viagem</string>
+    <string name="option_add">Adicionar</string>
     <string name="option_confirm">Confirmar</string>
     <string name="label_trip_list">Viagens</string>
     <string name="label_country_selection">Seleção de países</string>
@@ -26,4 +26,7 @@
     <string name="start_date">De:</string>
     <string name="end_date">Até:</string>
     <string name="title_entries">Anotações</string>
+    <string name="toast_insert_entry_data">Uma anotação deve ter uma data e conteúdo!</string>
+    <string name="toast_invalid_entry_date">A data é inválida!</string>
+    <string name="toast_entry_date_outside_range">A data deve ser entre a data de início e a data final!</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.vmschmidt.travelapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import java.util.List;
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
 
     private List<Country> countries;
-    private static boolean[] checkedCountries;
+    private boolean[] checkedCountries;
     private OnCountryListener onCountryListener;
 
     // Provide a reference to the views for each data item
@@ -105,7 +106,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
         return false;
     }
 
-    public static int[] getSelectedIndexes(){
+    public int[] getSelectedIndexes(){
 
         ArrayList<Integer> selectedIndexes = new ArrayList<>();
 
