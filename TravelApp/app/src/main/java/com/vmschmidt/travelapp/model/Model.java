@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Timer;
 
 public class Model {
 
@@ -139,6 +140,8 @@ public class Model {
                 "ON t.id = tc.trip_id\n" +
                 "WHERE trip_id = ?", new String[]{String.valueOf(tripId)});
 
+        Trip trip = null;
+
         if(tripCursor.moveToFirst()){
             ArrayList<Country> countries = new ArrayList<>();
             String name = tripCursor.getString(tripCursor.getColumnIndex("trip_name"));
@@ -153,11 +156,10 @@ public class Model {
                 countries.add(country);
                 tripCursor.moveToNext();
             }
-            Trip trip = new Trip(name, startDate, endDate, tripId, tripIconBitmap, countries);
-            tripCursor.close();
-            return trip;
+            trip = new Trip(name, startDate, endDate, tripId, tripIconBitmap, countries);
         }
-        return null;
+        tripCursor.close();
+        return trip;
     }
 
     public void updateTrip(int tripId, String tripName, byte[] tripIconByteArray){
@@ -166,6 +168,67 @@ public class Model {
         contentValues.put("name", tripName);
         contentValues.put("icon", tripIconByteArray);
         database.update("Trip", contentValues, "id = ?", new String[]{String.valueOf(tripId)});
+    }
+
+    public ArrayList<Entry> getEntriesFromTrip(int tripId){
+        ArrayList<Entry> entries = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM Entry WHERE trip_id = ?", new String[]{String.valueOf(tripId)});
+
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                MyCustomDate date = new MyCustomDate(cursor.getString(cursor.getColumnIndex("date")));
+                String content = cursor.getString(cursor.getColumnIndex("text"));
+                Entry entry = new Entry(id, tripId, date, content);
+                entries.add(entry);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return entries;
+    }
+
+    public void addEntryToTrip(int tripId, MyCustomDate entryDate, String entryContent){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("trip_id", tripId);
+        contentValues.put("date", entryDate.toString());
+        contentValues.put("text", entryContent);
+        database.insert("Entry", null, contentValues);
+
+    }
+
+    public Entry getEntryById(int entryId){
+        Cursor cursor = database.rawQuery("SELECT * FROM Entry WHERE id = ?", new String[]{String.valueOf(entryId)});
+
+        Entry entry = null;
+        if(cursor.moveToNext()){
+            int tripId = cursor.getInt(cursor.getColumnIndex("trip_id"));
+            MyCustomDate entryDate = new MyCustomDate(cursor.getString(cursor.getColumnIndex("date")));
+            String entryContent = cursor.getString(cursor.getColumnIndex("text"));
+            entry = new Entry(entryId, tripId, entryDate, entryContent);
+        }
+        cursor.close();
+        return entry;
+    }
+
+    public void updateEntry(int entryId, MyCustomDate entryDate, String entryContent){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("date", entryDate.toString());
+        contentValues.put("text", entryContent);
+        database.update("Entry", contentValues, "id = ?", new String[]{String.valueOf(entryId)});
+        Cursor cursor = database.rawQuery("SELECT * FROM Entry WHERE id = ?", new String[]{String.valueOf(entryId)});
+
+        Entry entry = null;
+        if(cursor.moveToNext()){
+            int tripId = cursor.getInt(cursor.getColumnIndex("trip_id"));
+            MyCustomDate bla = new MyCustomDate(cursor.getString(cursor.getColumnIndex("date")));
+            String foo = cursor.getString(cursor.getColumnIndex("text"));
+            entry = new Entry(entryId, tripId, bla, foo);
+            Log.d("ENTRY" , entry.toString());
+        }
+        cursor.close();
     }
 
 //    public ArrayList<Trip> getTrips(){

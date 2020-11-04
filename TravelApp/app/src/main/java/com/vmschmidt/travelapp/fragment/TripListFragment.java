@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,10 +29,10 @@ import java.util.ArrayList;
 
 public class TripListFragment extends Fragment implements TripAdapter.OnTripListener {
 
-    private ArrayList<String> yearsTest;
     private TripAdapter tripAdapter;
     private ArrayList<Trip> trips;
     private RecyclerView tripList;
+    private Spinner orderBySpinner;
 
     public TripListFragment(){
     }
@@ -44,14 +43,9 @@ public class TripListFragment extends Fragment implements TripAdapter.OnTripList
 
         View view = inflater.inflate(R.layout.trips_list_fragment, container, false);
 
-        yearsTest = new ArrayList<>();
-        yearsTest.add(getString(R.string.spinner_item_all));
-        yearsTest.addAll(Model.getInstance().getYears());
-
         tripList = view.findViewById(R.id.trip_list);
         tripList.setLayoutManager(new LinearLayoutManager(getContext()));
-        Spinner yearSelectionSpinner = view.findViewById(R.id.spinner_year_selection);
-        Spinner orderBySpinner = view.findViewById(R.id.spinner_order_by);
+        orderBySpinner = view.findViewById(R.id.spinner_order_by);
 
         setHasOptionsMenu(true);
 
@@ -82,44 +76,20 @@ public class TripListFragment extends Fragment implements TripAdapter.OnTripList
             }
         });
 
-        ArrayAdapter<String> yearsTestAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, yearsTest);
-        yearsTestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSelectionSpinner.setAdapter(yearsTestAdapter);
-        yearSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateSelectedYear(yearsTest.get(i));
-                tripAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         return view;
-    }
-
-    public void updateSelectedYear(String year){
-        ArrayList<Trip> matchingTrips;
-        if(year.equals(getString(R.string.spinner_item_all))){
-            matchingTrips = Model.getInstance().getTrips();
-        }else{
-            matchingTrips = Model.getInstance().getTripsFromYear(year);
-        }
-        tripAdapter.setTrips(matchingTrips);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.custom_menu, menu);
-        MenuItem addTripOption = menu.add(R.string.option_add_trip);
+        MenuItem addTripOption = menu.add(R.string.option_add);
         addTripOption.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         addTripOption.setIcon(R.drawable.ic_baseline_add_24);
         addTripOption.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                NavHostFragment.findNavController(TripListFragment.this).navigate(TripListFragmentDirections.actionTripListFragmentToCountryListFragment());
+                NavHostFragment.findNavController(TripListFragment.this)
+                        .navigate(TripListFragmentDirections.actionTripListFragmentToCountryListFragment());
                 return false;
             }
         });
@@ -128,6 +98,7 @@ public class TripListFragment extends Fragment implements TripAdapter.OnTripList
     @Override
     public void onTripClick(int position) {
         Trip trip = trips.get(position);
-        NavHostFragment.findNavController(TripListFragment.this).navigate(TripListFragmentDirections.actionTripListFragmentToTripDetailFragment(trip.getId()));
+        NavHostFragment.findNavController(TripListFragment.this)
+                .navigate(TripListFragmentDirections.actionTripListFragmentToTripDetailFragment(trip.getId()));
     }
 }

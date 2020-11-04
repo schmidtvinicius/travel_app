@@ -123,9 +123,9 @@ public class CreateTripFormFragment extends Fragment {
 
                 if(tripTitleEditText.getText().length() == 0 || tripStartDateEditText.getText().length() == 0 || tripEndDateEditText.getText().length() == 0){
                     Toast.makeText(getContext(), R.string.toast_insert_trip_title, Toast.LENGTH_SHORT).show();
-                }else if(!tripStartDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
+                }else if(!tripStartDateEditText.getText().toString().matches("^((0[1-9])[-]|([1-2][0-9])[-]|(3[0-1])[-])((0[1-9])[-]|(1[0-2])[-])((19[7-9][0-9])|(20)[0-9]{2})$")){
                     Toast.makeText(getContext(), R.string.toast_invalid_start_date, Toast.LENGTH_LONG).show();
-                }else if(!tripEndDateEditText.getText().toString().matches("^((0[1-9])[-/.]|([1-2][0-9])[-/.]|(3[0-1])[-/.])((0[1-9])[-/.]|(1[0-2])[-/.])((19[7-9][0-9])|(20)[0-9]{2})$")){
+                }else if(!tripEndDateEditText.getText().toString().matches("^((0[1-9])[-]|([1-2][0-9])[-]|(3[0-1])[-])((0[1-9])[-]|(1[0-2])[-])((19[7-9][0-9])|(20)[0-9]{2})$")){
                     Toast.makeText(getContext(), R.string.toast_invalid_end_date, Toast.LENGTH_LONG).show();
                 }else if(tripStartDateEditText.getText().toString().compareTo(tripEndDateEditText.getText().toString()) > 0){
                     Toast.makeText(getContext(), R.string.toast_start_after_end, Toast.LENGTH_LONG).show();
