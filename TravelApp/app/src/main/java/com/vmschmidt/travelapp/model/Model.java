@@ -72,13 +72,18 @@ public class Model {
         return countries;
     }
 
-    public ArrayList<Country> getCountriesFromIndexes(int[] selectedIndexes){
+    public ArrayList<Country> getCountriesByCode(String[] selectedCountryCodes){
         ArrayList<Country> selectedCountries = new ArrayList<>();
 
-        for(int index : selectedIndexes){
-            selectedCountries.add(countries.get(index));
+        for(String code : selectedCountryCodes){
+            Cursor cursor = database.rawQuery("SELECT * FROM Country WHERE code = ?", new String[]{code});
+            if(cursor.moveToFirst()){
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                Country country = new Country(code, name);
+                selectedCountries.add(country);
+            }
+            cursor.close();
         }
-
         return selectedCountries;
     }
 

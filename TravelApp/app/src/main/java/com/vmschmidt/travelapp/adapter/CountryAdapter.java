@@ -95,6 +95,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
 
     public void updateCheckedCountry(int position){
         checkedCountries[position] = !checkedCountries[position];
+        Log.d("CHECKED", String.valueOf(position) + String.valueOf(checkedCountries[position]));
     }
 
     public boolean hasSelectedCountries(){
@@ -106,23 +107,24 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
         return false;
     }
 
-    public int[] getSelectedIndexes(){
+    public String[] getSelectedCountryCodes(){
 
-        ArrayList<Integer> selectedIndexes = new ArrayList<>();
+        ArrayList<String> selectedCountryCodes = new ArrayList<>();
 
         for(int i = 0; i < checkedCountries.length; i++) {
             if (checkedCountries[i]) {
-                selectedIndexes.add(i);
+                selectedCountryCodes.add(countries.get(i).getCode());
             }
         }
 
-        int[] selectedIndexesArray = new int[selectedIndexes.size()];
+        String[] selectedCountryCodesArray = new String[selectedCountryCodes.size()];
 
-        for(int i = 0; i < selectedIndexesArray.length; i++){
-            selectedIndexesArray[i] = selectedIndexes.get(i);
+        for(int i = 0; i < selectedCountryCodes.size(); i++){
+            selectedCountryCodesArray[i] = selectedCountryCodes.get(i);
+            Log.d("COUNTRYCODE", selectedCountryCodes.get(i));
         }
 
-        return selectedIndexesArray;
+        return selectedCountryCodesArray;
     }
 
 }

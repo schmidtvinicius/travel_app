@@ -31,8 +31,8 @@
         android:name="com.vmschmidt.travelapp.fragment.CreateTripFormFragment"
         tools:layout="@layout/fragment_create_trip_form" >
         <argument
-            android:name="SelectedIndexes"
-            app:argType="integer[]" />
+            android:name="SelectedCountryCodes"
+            app:argType="string[]" />
         <action
             android:id="@+id/action_createTripFormFragment_to_tripListFragment"
             app:destination="@id/tripListFragment"

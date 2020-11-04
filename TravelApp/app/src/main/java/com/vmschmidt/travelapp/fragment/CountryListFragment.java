@@ -60,7 +60,7 @@ public class CountryListFragment extends Fragment implements CountryAdapter.OnCo
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(adapter.hasSelectedCountries()){
                     NavHostFragment.findNavController(CountryListFragment.this)
-                            .navigate(CountryListFragmentDirections.actionCountryListFragmentToCreateTripFormFragment(adapter.getSelectedIndexes()));
+                            .navigate(CountryListFragmentDirections.actionCountryListFragmentToCreateTripFormFragment(adapter.getSelectedCountryCodes()));
                 }else{
                     Toast.makeText(getContext(), R.string.toast_select_country, Toast.LENGTH_SHORT).show();
                 }
